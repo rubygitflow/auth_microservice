@@ -28,7 +28,9 @@ module ApplicationLoader
   def require_app
     require_dir 'config/initializers'
     Unreloader.require(File.join(self.root, 'app/contracts'))
+    Unreloader.require(File.join(self.root, 'app/services/basic_service.rb'))
     Unreloader.require(File.join(self.root, 'app/services'))
+    Unreloader.require(File.join(self.root, 'app/lib'))
   end
 
   def init_app

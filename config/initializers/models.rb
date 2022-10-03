@@ -14,6 +14,8 @@ Sequel::Model.plugin :prepared_statements
 Sequel::Model.plugin :require_valid_schema
 Sequel::Model.plugin :validation_helpers
 Sequel::Model.plugin :json_serializer
+Sequel::Model.plugin :uuid
+Sequel::Model.plugin :association_dependencies
 Sequel::Model.plugin :timestamps, update_on_create: true
 Sequel::Model.plugin :subclasses unless ENV['RACK_ENV'] == 'development'
 

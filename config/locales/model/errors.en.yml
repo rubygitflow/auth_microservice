@@ -1,3 +1,14 @@
 en:
   model:
     errors:
+      user:
+        name:
+          blank: 'Enter your name'
+          format: 'Use letters, numbers, or underscores for your name'
+        email:
+          blank: 'Enter email'
+        password:
+          blank: 'Enter password'
+      user_session:
+        uuid:
+          blank: 'Missing uuid'

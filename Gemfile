@@ -16,6 +16,7 @@ gem 'config'
 
 gem 'sequel'
 gem 'sequel_pg', require: 'sequel'
+gem 'sequel_secure_password'
 
 gem 'activesupport', require: false
 

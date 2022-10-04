@@ -55,7 +55,9 @@ class AuthMicroservice < Roda
       error_response e.message, meta: {'meta' => I18n.t(:missing_parameters, scope: 'api.errors')}
     when NameError # Dry::Validation::Result  -  #  3-d catch
       response.status = 422
-      error_response @dry_validation_response
+      key = @dry_validation_response.keys.first
+      value = I18n.t(:blank, scope: "model.errors.user.#{key}", default: @dry_validation_response[key])
+      error_response({key => value})
     else
       response.status = 500
       error_response e.message, meta: {'meta' => e.class }
@@ -74,6 +76,6 @@ class AuthMicroservice < Roda
     r.root do
       {status: :ok, message: I18n.t('hello'), page_size: Settings.pagination.page_size }
     end
-    # r.hash_routes
+    r.hash_routes
   end
 end

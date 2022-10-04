@@ -23,6 +23,8 @@ gem 'activesupport', require: false
 gem 'dry-initializer'
 gem 'dry-validation'
 
+gem 'jwt'
+
 group :development do
   gem 'pry'
   gem 'rubocop', require: false

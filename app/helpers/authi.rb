@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Auth
+module Authi
   AUTH_TOKEN = %r{\ABearer (?<token>.+)\z}
 
   def extracted_token

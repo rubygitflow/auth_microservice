@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Authi
-  AUTH_TOKEN = %r{\ABearer (?<token>.+)\z}
+  AUTH_TOKEN = /\ABearer (?<token>.+)\z/.freeze
 
   def extracted_token
     JwtEncoder.decode(matched_token)

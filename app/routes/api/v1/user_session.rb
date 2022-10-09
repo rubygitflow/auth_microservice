@@ -4,13 +4,13 @@ class AuthMicroservice
   include Validations
   include ApiErrors
 
-  hash_path("/api/v1/user_session") do |r|
+  hash_path('/api/v1/user_session') do |r|
     r.is do
       r.post do
         session_params = validate_with!(SessionParamsContract)
         error = session_params.errors.to_hash
         if error.present?
-          @dry_validation_response = error 
+          @dry_validation_response = error
           raise NameError
         end
 
@@ -21,7 +21,7 @@ class AuthMicroservice
           meta = { token: token }
 
           response.status = 201
-          {meta: meta}
+          { meta: meta }
         else
           response.status = 401
           error_response(result.session || result.errors)

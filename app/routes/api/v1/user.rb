@@ -4,7 +4,7 @@ class AuthMicroservice
   include Validations
   include ApiErrors
 
-  hash_path("/api/v1/user") do |r|
+  hash_path('/api/v1/user') do |r|
     r.is do
       r.post do
         user_params = validate_with!(UserParamsContract)

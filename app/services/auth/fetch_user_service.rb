@@ -10,6 +10,7 @@ module Auth
 
     def call
       return fail!(I18n.t(:forbidden, scope: 'services.auth.fetch_user_service')) if @uuid.blank? || session.blank?
+
       @user = session.user
     end
 
@@ -17,8 +18,8 @@ module Auth
 
     def session
       @session ||= UserSession.find(uuid: @uuid)
-    rescue => e
-      raise unless e.cause.kind_of?(PG::InvalidTextRepresentation)
+    rescue StandardError => e
+      raise unless e.cause.is_a?(PG::InvalidTextRepresentation)
     end
   end
 end

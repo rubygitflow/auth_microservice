@@ -2,7 +2,7 @@
 
 RSpec.describe AuthMicroservice, type: :routes do
   describe 'POST /api/v1/user_session' do
-    context 'missing parameters' do
+    context 'with missing parameters' do
       it 'returns an error' do
         post '/api/v1/user_session', email: 'bob@example.com', password: ''
 
@@ -10,16 +10,21 @@ RSpec.describe AuthMicroservice, type: :routes do
       end
     end
 
-    context 'invalid parameters' do
+    context 'with invalid parameters' do
       it 'returns an error' do
         post '/api/v1/user_session', email: 'bob@example.com', password: 'invalid'
 
-        expect(last_response.status).to eq(401)
         expect(response_body['errors']).to include('detail' => "The session can't be created")
+      end
+
+      it 'has status 401' do
+        post '/api/v1/user_session', email: 'bob@example.com', password: 'invalid'
+
+        expect(last_response.status).to eq(401)
       end
     end
 
-    context 'valid parameters' do
+    context 'with valid parameters' do
       let(:token) { 'jwt_token' }
 
       before do
@@ -31,8 +36,13 @@ RSpec.describe AuthMicroservice, type: :routes do
       it 'returns created status' do
         post '/api/v1/user_session', email: 'bob@example.com', password: 'givemeatoken'
 
-        expect(last_response.status).to eq(201)
         expect(response_body['meta']).to eq('token' => token)
+      end
+
+      it 'has status 201' do
+        post '/api/v1/user_session', email: 'bob@example.com', password: 'givemeatoken'
+
+        expect(last_response.status).to eq(201)
       end
     end
   end

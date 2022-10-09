@@ -12,4 +12,4 @@ end
 # See https://stackoverflow.com/a/43592300/825563
 # and https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#build-strategies-1
 FactoryBot.use_parent_strategy = false
-FactoryBot.define { to_create { |model| model.save } }
+FactoryBot.define { to_create(&:save) }

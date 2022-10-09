@@ -3,7 +3,7 @@
 class User < Sequel::Model
   plugin :secure_password, include_validations: false
 
-  NAME_FORMAT = %r{\A\w+\z}
+  NAME_FORMAT = /\A\w+\z/.freeze
 
   one_to_many :sessions, class: :UserSession
   add_association_dependencies sessions: :delete

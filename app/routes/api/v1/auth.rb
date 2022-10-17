@@ -8,6 +8,7 @@ class AuthMicroservice
     r.is do
       r.post do
         k = extracted_token['uuid']
+
         result = Auth::FetchUserService.call(k)
 
         if result.success?

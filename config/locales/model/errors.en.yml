@@ -7,6 +7,7 @@ en:
           format: 'Use letters, numbers, or underscores for your name'
         email:
           blank: 'Enter email'
+          format: 'Invalid email format'
         password:
           blank: 'Enter password'
       user_session:

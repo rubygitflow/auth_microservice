@@ -7,6 +7,7 @@ ru:
           format: 'Укажите имя, используя буквы, цифры или символ подчёркивания'
         email:
           blank: 'Укажите email'
+          format: 'Недопустимый формат email'
         password:
           blank: 'Укажите пароль'
       user_session:

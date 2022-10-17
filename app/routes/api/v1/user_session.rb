@@ -8,11 +8,6 @@ class AuthMicroservice
     r.is do
       r.post do
         session_params = validate_with!(SessionParamsContract)
-        error = session_params.errors.to_hash
-        if error.present?
-          @dry_validation_response = error
-          raise NameError
-        end
 
         result = UserSessions::CreateService.call(*session_params.to_h.values)
 

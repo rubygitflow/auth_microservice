@@ -24,6 +24,8 @@ gem 'dry-validation'
 
 gem 'jwt'
 
+gem 'bunny'
+
 group :development do
   gem 'pry'
 end

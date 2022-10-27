@@ -45,8 +45,11 @@ $ RACK_ENV=test ENV__PAGINATION__PAGE_SIZE=100 bin/console
 ```
 ## HTTP-requests to the app
 ```bash
-$ curl --url "http://localhost:9292" -v
-$ http :9292
+$ curl --url "http://localhost:3000" -v
+$ http :3000
+$ http -f post ":3000/api/v1/user" "name=bob" "email=bob@example.com" "password=password"
+$ http -f post ":3000/api/v1/user_session" "email=bob@example.com" "password=password"
+$ http -f post ":3000/api/v1/auth" "Authorization:Bearer some_token_received_in_user_session"
 ```
 ## Run tests
 ```bash

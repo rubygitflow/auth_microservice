@@ -2,10 +2,18 @@
 
 require_relative '../application'
 
-dev = ENV['RACK_ENV'] == 'development'
+def stdout?
+  ENV['LOG_SERVICE'] == 'stdout'
+end
 
-#             dev ? $stdout : 
-logger_path = "#{AuthMicroservice.root}/#{Settings.logger.path}"
+logger_path = case ENV['LOG_SERVICE']
+              when 'stdout'
+                $stdout
+              when nil
+                "#{AuthMicroservice.root}/#{Settings.logger.path}"
+              else
+                "#{AuthMicroservice.root}/#{ENV['LOG_SERVICE']}"
+              end
 
 AuthMicroservice.configure do |app|
   logger = Ougai::Logger.new(
@@ -13,7 +21,7 @@ AuthMicroservice.configure do |app|
     level: Settings.logger.level
   )
 
-  logger.formatter = Ougai::Formatters::Readable.new if dev
+  logger.formatter = Ougai::Formatters::Readable.new if stdout?
 
   logger.before_log = lambda do |data|
     data[:service] = { name: Settings.app.name }

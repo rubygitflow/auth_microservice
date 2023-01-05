@@ -22,9 +22,8 @@ migrate = lambda do |env, version|
   require 'config'
   require_relative 'config/initializers/config'
   require_relative 'config/initializers/db'
-  require 'logger'
   Sequel.extension :migration
-  DB.loggers << Logger.new($stdout) if DB.loggers.empty?
+  DB.loggers << Ougai::Logger.new($stdout) if DB.loggers.empty?
   Sequel::Migrator.apply(DB, 'db/migrations', version)
 end
 
@@ -93,7 +92,7 @@ seeds = lambda do |env|
   require_relative 'config/initializers/models'
   require_relative 'config/application_loader'
   require_relative 'config/initializers/i18n'
-  require 'logger'
+  DB.loggers << Ougai::Logger.new($stdout) if DB.loggers.empty?
   require_relative 'db/seeds'
 end
 

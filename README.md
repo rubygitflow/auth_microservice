@@ -1,10 +1,10 @@
-# Auth Microservice
-Auth microservice for RabbitMQ synchronous [Ads Microservice](https://github.com/rubygitflow/ads_microservice/tree/rabbitmq_synchro) from Ruby Microservices course
+# Auth Microservice (on RabbitMQ)
+Auth microservice for [Ads Microservice](https://github.com/rubygitflow/ads_microservice/tree/logging) on RabbitMQ from Ruby Microservices course
 
 ## Download this app from the repository
 It's set up so you can clone this repository and base your application on it:
 ```bash
-$ git clone git@github.com:rubygitflow/auth_microservice.git app_auth --single-branch --branch rabbitmq_synchro && cd app_auth && rm -r -f .git/
+$ git clone git@github.com:rubygitflow/auth_microservice.git app_auth --single-branch --branch logging && cd app_auth && rm -r -f .git/
 ```
 Initialize and configure a new Git repository (you need to have a [personal access token](https://github.com/settings/tokens)):
 ```bash
@@ -28,25 +28,28 @@ For more details, see the [github docs](https://docs.github.com/en/rest/repos/re
 ## Database Setup
 By default Sequel assumes a PostgreSQL database, with an application specific PostgreSQL database account.  You can create this via:
 ```bash
-$ createuser -U postgres my_app
-$ createdb -U postgres -O my_app auth_microservice_production -p 5432 -h 127.0.0.1
-$ createdb -U postgres -O my_app auth_microservice_test -p 5432 -h 127.0.0.1
-$ createdb -U postgres -O my_app auth_microservice_development -p 5432 -h 127.0.0.1
+$ createuser -U postgres app_auth
+$ createdb -U postgres -O app_auth auth_microservice_production -p 5432 -h 127.0.0.1
+$ createdb -U postgres -O app_auth auth_microservice_test -p 5432 -h 127.0.0.1
+$ createdb -U postgres -O app_auth auth_microservice_development -p 5432 -h 127.0.0.1
 ```
 Create password for user account via:
 ```bash
 $ sudo su - postgres
-$ psql -c "alter user my_app with password 'mypassword'"
+$ psql -c "alter user app_auth with password 'mypassword'"
 ```
-Configure the database connection defined in .env.rb for the ENV parameter `ENV['MY_APP_DATABASE_URL'] ||= "postgres://user:password@host:port/database_name_environment"` like so:
+Configure the RabbitMQ connection and the database connection in .env.rb for the ENV parameter `ENV['AUTH_MICROSERVICE_DATABASE_URL'] ||= "postgres://user:password@host:port/database_name_environment"` like so:
 ```ruby
+ENV['RABBITMQ_HOST']='127.0.0.1'
+ENV['RABBITMQ_USER']='RabbitMQ_UserName'
+ENV['RABBITMQ_PASSWORD']='RabbitMQ_Password'
 case ENV['RACK_ENV'] ||= 'development'
 when 'test'
-  ENV['AUTH_MICROSERVICE_DATABASE_URL'] ||= "postgres://my_app:mypassword@127.0.0.1:5432/auth_microservice_test"
+  ENV['AUTH_MICROSERVICE_DATABASE_URL'] ||= "postgres://app_auth:mypassword@127.0.0.1:5432/auth_microservice_test"
 when 'production'
-  ENV['AUTH_MICROSERVICE_DATABASE_URL'] ||= "postgres://my_app:mypassword@127.0.0.1:5432/auth_microservice_production"
+  ENV['AUTH_MICROSERVICE_DATABASE_URL'] ||= "postgres://app_auth:mypassword@127.0.0.1:5432/auth_microservice_production"
 else
-  ENV['AUTH_MICROSERVICE_DATABASE_URL'] ||= "postgres://my_app:mypassword@127.0.0.1:5432/auth_microservice_development"
+  ENV['AUTH_MICROSERVICE_DATABASE_URL'] ||= "postgres://app_auth:mypassword@127.0.0.1:5432/auth_microservice_development"
 end
 ```
 According to the [Sequel documentation](https://github.com/jeremyevans/sequel#connecting-to-a-database-), you can also specify optional parameters `Settings.db` in `config/settings/*.yml` and `config/*.yml`
@@ -64,8 +67,8 @@ $ bin/console
 ```
 or run the application with modified configuration using environment variables
 ```bash
-$ RACK_ENV=test ENV__PAGINATION__PAGE_SIZE=100 bin/puma
-$ RACK_ENV=test ENV__PAGINATION__PAGE_SIZE=100 bin/console
+$ ENV__PAGINATION__PAGE_SIZE=100 LOG_SERVICE=stdout bin/puma
+$ RACK_ENV=test bin/console
 ```
 ## HTTP-requests to the app
 ```bash

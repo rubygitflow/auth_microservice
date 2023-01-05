@@ -1,10 +1,11 @@
+app:
+  name: auth
+  secret: secret
 db:
   pool: 10
   timeout: 10000
   shared_buffers: 512MB
 pagination:
   page_size: 20
-app:
-  secret: secret
 rabbitmq:
   consumer_pool: 10

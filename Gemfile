@@ -26,11 +26,16 @@ gem 'jwt'
 
 gem 'bunny'
 
+gem 'ougai', require: 'ougai'
+gem 'rack-ougai', require: 'rack/ougai'
+gem 'rack-request-id'
+
 group :development do
   gem 'pry'
 end
 
 group :development, :test do
+  gem 'amazing_print'
   gem 'rubocop', require: false
   gem 'rubocop-rspec', require: false
 end
